@@ -1,0 +1,13 @@
+.git
+.next
+node_modules
+npm-debug.log
+Dockerfile
+.dockerignore
+README.md
+test.html
+test-responsive.mjs
+verify-animations.html
+body-content.html
+body-content.txt
+body-extract.html

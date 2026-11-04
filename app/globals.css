@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+:root {
+  --background: #051c0e;
+  --foreground: #FFF7EA;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+/* ─── Ribbon Marquee ─── */
+.ribbon-marquee {
+  display: flex;
+  align-items: center;
+  min-width: 200%;
+  animation: ribbonScroll 10s linear infinite;
+}
+
+@keyframes ribbonScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Hero film reel border */
+.hero-frame {
+  --film-thickness: clamp(30px, 2.78vw, 40px);
+  --film-underlay-inset: clamp(8px, 0.72vw, 12px);
+  --film-pattern-length: calc(var(--film-thickness) * 34);
+  --film-speed: 18s;
+}
+
+/* Thinner film strips on phones so the frame doesn't swallow the content */
+@media (max-width: 639px) {
+  .hero-frame {
+    --film-thickness: clamp(20px, 6vw, 30px);
+    --film-underlay-inset: 6px;
+  }
+}
+
+.film-reel-border {
+  isolation: isolate;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.film-reel-side {
+  position: absolute;
+  overflow: hidden;
+  background: transparent;
+  z-index: 1;
+}
+
+.film-reel-side::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  display: block;
+  background-image: url('/images/film_reels.svg');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  will-change: background-position;
+}
+
+.film-reel-side-top,
+.film-reel-side-bottom {
+  left: 0;
+  right: 0;
+  height: var(--film-thickness);
+}
+
+.film-reel-side-top { top: 0; }
+.film-reel-side-bottom { bottom: 0; }
+
+.film-reel-side-top::before {
+  animation: filmReelClockwiseTop var(--film-speed) linear infinite;
+}
+
+.film-reel-side-bottom::before {
+  animation: filmReelClockwiseBottom var(--film-speed) linear infinite;
+}
+
+.film-reel-side-left,
+.film-reel-side-right {
+  top: 0;
+  bottom: 0;
+  width: var(--film-thickness);
+}
+
+.film-reel-side-left { left: 0; }
+.film-reel-side-right { right: 0; }
+
+.film-reel-side-left::before,
+.film-reel-side-right::before {
+  inset: auto;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  min-width: 100%;
+  height: var(--film-thickness);
+  transform-origin: top left;
+}
+
+.film-reel-side-right::before {
+  transform: translateX(var(--film-thickness)) rotate(90deg);
+  animation: filmReelClockwiseRight var(--film-speed) linear infinite;
+}
+
+.film-reel-side-left::before {
+  transform: translateX(var(--film-thickness)) rotate(90deg);
+  animation: filmReelClockwiseLeft var(--film-speed) linear infinite;
+}
+
+.film-reel-corner {
+  position: absolute;
+  z-index: 2;
+  width: calc(var(--film-thickness) * 1.02);
+  height: calc(var(--film-thickness) * 1.02);
+  background: #000;
+}
+
+.film-reel-corner-top-left {
+  top: 0;
+  left: 0;
+  border-bottom-right-radius: calc(var(--film-thickness) * 0.82);
+}
+
+.film-reel-corner-top-right {
+  top: 0;
+  right: 0;
+  border-bottom-left-radius: calc(var(--film-thickness) * 0.82);
+}
+
+.film-reel-corner-bottom-left {
+  bottom: 0;
+  left: 0;
+  border-top-right-radius: calc(var(--film-thickness) * 0.82);
+}
+
+.film-reel-corner-bottom-right {
+  right: 0;
+  bottom: 0;
+  border-top-left-radius: calc(var(--film-thickness) * 0.82);
+}
+
+@keyframes filmReelClockwiseTop {
+  from { background-position: calc(var(--film-pattern-length) * -1) 0; }
+  to { background-position: 0 0; }
+}
+
+@keyframes filmReelClockwiseRight {
+  from { background-position: calc(var(--film-pattern-length) * -1) 0; }
+  to { background-position: 0 0; }
+}
+
+@keyframes filmReelClockwiseBottom {
+  from { background-position: 0 0; }
+  to { background-position: calc(var(--film-pattern-length) * -1) 0; }
+}
+
+@keyframes filmReelClockwiseLeft {
+  from { background-position: 0 0; }
+  to { background-position: calc(var(--film-pattern-length) * -1) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-reel-side::before {
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+  }
+}
+
+/* ─── Gradient text shimmer (About section) ─── */
+.gradient-text-motion {
+  background-image: linear-gradient(90deg, #fffcf4 0%, #1cb354 35%, #fffcf4 100%);
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* ─── Ticket card perforated edge ─── */
+.ticket-card {
+  position: relative;
+}
+.ticket-card::before,
+.ticket-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 32px;
+  background: #051c0e;
+  border-radius: 999px;
+  z-index: 2;
+}
+.ticket-card::before { left: -8px; }
+.ticket-card::after  { right: -8px; }
+
+/* ─── Scan line overlay ─── */
+.scanline-overlay {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255,247,234,0.015) 3px,
+    rgba(255,247,234,0.015) 4px
+  );
+  pointer-events: none;
+}
+
+/* ─── Film grain (CSS fallback when no image) ─── */
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  10%      { transform: translate(-2%,-3%); }
+  20%      { transform: translate(3%,2%); }
+  30%      { transform: translate(-1%,4%); }
+  40%      { transform: translate(2%,-1%); }
+  50%      { transform: translate(-3%,1%); }
+  60%      { transform: translate(1%,3%); }
+  70%      { transform: translate(3%,-2%); }
+  80%      { transform: translate(-2%,2%); }
+  90%      { transform: translate(1%,-3%); }
+}
+
+/* ─── Float animation ─── */
+@keyframes floatY {
+  0%,100% { transform: translateY(0px); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* ─── Glow pulse ─── */
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(28,179,84,0.25), 0 0 40px rgba(28,179,84,0.1); }
+  50%      { box-shadow: 0 0 35px rgba(28,179,84,0.5), 0 0 70px rgba(28,179,84,0.2); }
+}
+
+/* ─── Creator card tilt ─── */
+.creator-card:nth-child(odd)  { transform: rotate(-2deg); }
+.creator-card:nth-child(even) { transform: rotate(2deg); }
+.creator-card:hover { transform: rotate(0deg) scale(1.04); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+/* ─── Section title underline glow ─── */
+.section-title-glow {
+  text-shadow: 0 0 60px rgba(255,247,234,0.15), 0 0 120px rgba(28,179,84,0.1);
+}
+
+/* ─── Input field focus ring ─── */
+.pyro-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,247,234,0.3);
+  color: #FFF7EA;
+  outline: none;
+  padding: 12px 0;
+  width: 100%;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+.pyro-input::placeholder { color: rgba(255,247,234,0.4); }
+.pyro-input:focus { border-bottom-color: #1cb354; }
+
+/* ─── Horizontal divider with center label ─── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0.25;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #FFF7EA;
+}
+
+/* ─── Hide scrollbar but keep scroll functionality ─── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── Bubble Screen Overlay Fix ─── */
+.hero-frame div[class*="mix-blend-screen"] {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-frame div[class*="mix-blend-screen"] img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── Contact Neon Checkbox ─── */
+.contact-neon-checkbox {
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+}
+
+.contact-neon-checkbox .neon-checkbox__box {
+  background: transparent !important;
+  border: 1px solid #FFF7EA !important;
+}
+
+.contact-neon-checkbox svg {
+  stroke: #FFF7EA !important;
+}
