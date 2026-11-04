@@ -78,6 +78,7 @@ export default function RootLayout({
           src={TRACKER_SRC}
           data-require-consent="true"
           data-capture-forms="true"
+          data-capture-autofill="true"
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#051c0e]">

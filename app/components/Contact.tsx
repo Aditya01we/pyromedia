@@ -278,7 +278,6 @@ const Contact = () => {
         <form
   ref={formRef}
   onSubmit={handleSubmit}
-  autoComplete="off"
   className="mt-10 flex w-full max-w-[780px] flex-col gap-4 lg:mt-10" 
   // {/* Yahan gap-10 ko hata kar gap-4 kar diya gaya hai */}
 >
@@ -287,6 +286,7 @@ const Contact = () => {
     {/* Yahan gap-5 ko hata kar gap-4 kar diya gaya hai */}
     <ContactInput
       name="firstName"
+      autoComplete="given-name"
       value={form.firstName}
       onChange={handleChange}
       placeholder="First Name"
@@ -294,6 +294,7 @@ const Contact = () => {
     />
     <ContactInput
       name="lastName"
+      autoComplete="family-name"
       value={form.lastName}
       onChange={handleChange}
       placeholder="Last Name"
@@ -307,6 +308,7 @@ const Contact = () => {
     <ContactInput
       name="email"
       type="email"
+      autoComplete="email"
       value={form.email}
       onChange={handleChange}
       placeholder="Email Address"
@@ -315,6 +317,7 @@ const Contact = () => {
     <ContactInput
       name="phone"
       type="tel"
+      autoComplete="tel"
       value={form.phone}
       onChange={handleChange}
       placeholder="Phone Number"
@@ -385,8 +388,10 @@ function ContactInput({
   placeholder,
   type = 'text',
   required = false,
+  autoComplete,
 }: {
   name: string;
+  autoComplete?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
@@ -397,6 +402,7 @@ function ContactInput({
     <input
       name={name}
       type={type}
+      autoComplete={autoComplete}
       value={value}
       onChange={onChange}
       placeholder={placeholder}
