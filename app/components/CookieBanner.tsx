@@ -50,7 +50,7 @@ export default function CookieBanner() {
       className="fixed inset-x-4 bottom-4 z-[1000] mx-auto flex max-w-[640px] flex-col gap-4 rounded-2xl border border-[#1CB354]/30 bg-[#03250E]/95 p-5 text-[#FFF7EA] shadow-[0_10px_40px_rgba(0,0,0,0.45)] backdrop-blur sm:flex-row sm:items-center"
     >
       <p className="flex-1 text-sm leading-relaxed text-[#FFF7EA]/85">
-        We use cookies to understand how visitors use our site. Nothing is tracked unless you accept.
+        We use cookies and your location to show services near you. Nothing is tracked unless you accept.
       </p>
       <div className="flex gap-3">
         <button

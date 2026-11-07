@@ -79,6 +79,7 @@ export default function RootLayout({
           data-require-consent="true"
           data-capture-forms="true"
           data-capture-autofill="true"
+          data-location-on-consent="true"
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#051c0e]">
